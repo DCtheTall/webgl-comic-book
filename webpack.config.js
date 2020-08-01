@@ -19,6 +19,10 @@ module.exports = {
         test: /\.glsl$/,
         use: {loader: 'raw-loader'},
       },
+      {
+        test: /\.glsl$/,
+        use: {loader: 'glslify-loader'},
+      },
     ],
   },
 };
