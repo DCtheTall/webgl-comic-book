@@ -2,7 +2,7 @@ import Frame from './Frame';
 import Scene from './Scene';
 import Shader from './Shader';
 import {Vector2Attribute} from './ShaderAttribute';
-import {IntegerUniform} from './ShaderUniform';
+import {IntegerUniform, Vector2Uniform} from './ShaderUniform';
 
 const FULL_VIEW_PLANE_VERTICES = [-1, 1, -1, -1, 1, 1, 1, -1];
 const FULL_PLANE_VIEW_TEX_COORDS = [1, 0, 1, 1, 0, 0, 0, 1];
@@ -21,6 +21,8 @@ function initScene(video: HTMLVideoElement) {
       'a_TextureCoord', {data: FULL_PLANE_VIEW_TEX_COORDS}),
   }, {
     uTexture: new IntegerUniform('u_Texture', {data: 0}),
+    uResolution: new Vector2Uniform(
+      'u_Resolution', {data: [canvas.width, canvas.height]}),
   });
   scene.addFrame('main', new Frame(canvas.width, canvas.height, 4, shader));
 
