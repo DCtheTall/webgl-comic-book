@@ -107,14 +107,18 @@ vec3 color(sampler2D texSampler, vec2 texCoord) {
       hsv[0] -= 1.0 / nColors;
     }
   }
+  // Adjust the saturation.
+  hsv[1] = clamp(pow(hsv[1], 0.75) - 0.05, 0.0, 1.0);
   // Add cel shading.
   float originalV = hsv[2];
   float nCels = 12.0;
   hsv[2] = floor(nCels * hsv[2] + 0.5) / nCels;
   hsv[2] = clamp(hsv[2] + u_LightnessOffset, 0.0, 1.0);
   // Add black dots for the darkest areas.
-  if (originalV < 0.2
+  if (originalV < 0.3
       && length(texCoord - (floor(100.0 * texCoord + 0.5) / 100.0)) <= 0.002) {
+    hsv[2] = 0.0;
+  } else if (originalV < 0.15) {
     hsv[2] = 0.0;
   }
   return hsv2rgb(hsv);
