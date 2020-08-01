@@ -1,0 +1,16 @@
+body {
+  background: #eee;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+canvas {
+  background: #000;
+  height: 600px;
+  width: 600px;
+}
+
+video {
+  display: none;
+}
