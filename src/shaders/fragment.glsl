@@ -9,7 +9,7 @@ uniform float u_LightnessOffset;
 const mat3 BLUR_KERNEL = mat3(0.0625, 0.125, 0.0625,
                               0.125,  0.25,  0.125,
                               0.0625, 0.125, 0.0625);
-// Use the Sobel operator for taking the gradient.
+// Use the Prewitt operator for taking the gradient.
 const mat3 X_GRAD_KERNEL = mat3(1.0, 0.0, -1.0,
                                 1.0, 0.0, -1.0,
                                 1.0, 0.0, -1.0);
@@ -45,7 +45,7 @@ float intensity(vec3 color) {
 // Compute the images intensity gradient using convolutions.
 // 1. First apply a 3x3 gaussian blur kernel to the texture.
 // 2. Compute the intensity of the 3x3 grid of pixels around the current coordinate.
-// 3. Apply 3x3 Sobel operator to detect edges in x and y direction.
+// 3. Apply 3x3 Prewitt operator to detect edges in x and y direction.
 // Return vector
 vec2 intensityGradient(sampler2D texSampler, vec2 texCoord) {
   vec2 ds = vec2(1.0) / u_Resolution;
