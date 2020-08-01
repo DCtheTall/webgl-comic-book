@@ -99,27 +99,27 @@ vec3 color(sampler2D texSampler, vec2 texCoord) {
   vec3 hsv = rgb2hsv(texture2D(texSampler, texCoord).xyz);
   // Reduce the number of colors to 8.
   float nColors = 12.0;
-  hsv[0] = floor(2.0 * nColors * hsv[0] + 0.5) / 2.0 / nColors;
+  hsv.x = floor(2.0 * nColors * hsv.x + 0.5) / 2.0 / nColors;
   // Add comic book dots for colors.
-  if (floor(nColors * hsv[0] + 0.5) / nColors != hsv[0]) {
-    hsv[0] = floor(nColors * hsv[0] + 0.5) / nColors;
+  if (floor(nColors * hsv.x + 0.5) / nColors != hsv.x) {
+    hsv.x = floor(nColors * hsv.x + 0.5) / nColors;
     if (length(texCoord - (floor(100.0 * texCoord + 0.5) / 100.0)) <= 0.002) {
-      hsv[0] -= 1.0 / nColors;
+      hsv.x -= 1.0 / nColors;
     }
   }
   // Adjust the saturation.
-  hsv[1] = clamp(pow(hsv[1], 0.75) - 0.05, 0.0, 1.0);
+  hsv.y = clamp(pow(hsv.y, 0.75) - 0.05, 0.0, 1.0);
   // Add cel shading.
-  float originalV = hsv[2];
+  float originalV = hsv.z;
   float nCels = 12.0;
-  hsv[2] = floor(nCels * hsv[2] + 0.5) / nCels;
-  hsv[2] = clamp(hsv[2] + u_LightnessOffset, 0.0, 1.0);
-  // Add black dots for the darkest areas.
+  hsv.z = floor(nCels * hsv.z + 0.5) / nCels;
+  hsv.z = clamp(hsv.z + u_LightnessOffset, 0.0, 1.0);
+  // Add black dots and black out the darkest areas.
   if (originalV < 0.3
       && length(texCoord - (floor(100.0 * texCoord + 0.5) / 100.0)) <= 0.002) {
-    hsv[2] = 0.0;
+    hsv.z = 0.0;
   } else if (originalV < 0.15) {
-    hsv[2] = 0.0;
+    hsv.z = 0.0;
   }
   return hsv2rgb(hsv);
 }
