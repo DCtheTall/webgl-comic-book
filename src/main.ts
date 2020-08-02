@@ -6,7 +6,6 @@ import {FloatUniform, IntegerUniform, Vector2Uniform} from './ShaderUniform';
 
 const FULL_VIEW_PLANE_VERTICES = [-1, 1, -1, -1, 1, 1, 1, -1];
 const FULL_PLANE_VIEW_TEX_COORDS = [1, 0, 1, 1, 0, 0, 0, 1];
-const LIGHTNESS_OFFSET = 0.05;
 
 function initScene(canvas: HTMLCanvasElement, video: HTMLVideoElement) {
   const scene = new Scene(canvas);
@@ -23,8 +22,6 @@ function initScene(canvas: HTMLCanvasElement, video: HTMLVideoElement) {
     uTexture: new IntegerUniform('u_Texture', {data: 0}),
     uResolution: new Vector2Uniform(
       'u_Resolution', {data: [canvas.width, canvas.height]}),
-    uLightnessOffset: new FloatUniform(
-      'u_LightnessOffset', {data: LIGHTNESS_OFFSET}),
   });
   scene.addFrame('main', new Frame(canvas.width, canvas.height, 4, shader));
 
